@@ -1,0 +1,63 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      new_version:
+        description: 'New version (e.g., 1.2.0)'
+        required: true
+      release_name:
+        description: 'Release name'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Check if tag already exists
+        run: |
+          if git rev-parse "v${{ github.event.inputs.new_version }}" >/dev/null 2>&1; then
+            echo "Error: Tag v${{ github.event.inputs.new_version }} already exists. Releases are immutable."
+            exit 1
+          fi
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Configure Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Bump Maven Version
+        run: |
+          ./mvnw versions:set -DnewVersion=${{ github.event.inputs.new_version }} -DgenerateBackupPoms=false --batch-mode
+          ./mvnw versions:commit --batch-mode
+          git add pom.xml */pom.xml
+          git diff --staged --quiet || git commit -m "Bump version to ${{ github.event.inputs.new_version }}"
+          git push origin main
+
+      - name: Build Project
+        run: ./mvnw clean package --batch-mode
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ github.event.inputs.new_version }}
+          name: ${{ github.event.inputs.release_name }}
+          files: |
+            fluent-builder-annotations/target/*.jar
+            fluent-builder-processor/target/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
