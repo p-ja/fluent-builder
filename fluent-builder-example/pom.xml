@@ -7,7 +7,7 @@
     <parent>
         <groupId>stream.header.fluentbuilder</groupId>
         <artifactId>fluent-builder-parent</artifactId>
-        <version>0.1.0</version>
+        <version>0.1.1</version>
     </parent>
 
     <artifactId>fluent-builder-example</artifactId>
