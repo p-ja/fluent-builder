@@ -25,37 +25,38 @@ fluent-builder-parent/
 ### 1. Add dependencies to your project
 
 ```xml
+
 <dependencies>
-    <dependency>
-        <groupId>stream.header.fluentbuilder</groupId>
-        <artifactId>fluent-builder-annotations</artifactId>
-        <version>0.1.0</version>
-    </dependency>
-    <dependency>
-        <groupId>stream.header.fluentbuilder</groupId>
-        <artifactId>fluent-builder-processor</artifactId>
-        <version>0.1.0</version>
-        <scope>provided</scope>
-    </dependency>
+  <dependency>
+    <groupId>stream.header.fluentbuilder</groupId>
+    <artifactId>fluent-builder-annotations</artifactId>
+    <version>0.1.2</version>
+  </dependency>
+  <dependency>
+    <groupId>stream.header.fluentbuilder</groupId>
+    <artifactId>fluent-builder-processor</artifactId>
+    <version>0.1.2</version>
+    <scope>provided</scope>
+  </dependency>
 </dependencies>
 
 <build>
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.11.0</version>
-            <configuration>
-                <annotationProcessorPaths>
-                    <path>
-                        <groupId>stream.header.fluentbuilder</groupId>
-                        <artifactId>fluent-builder-processor</artifactId>
-                        <version>0.1.0</version>
-                    </path>
-                </annotationProcessorPaths>
-            </configuration>
-        </plugin>
-    </plugins>
+<plugins>
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.11.0</version>
+    <configuration>
+      <annotationProcessorPaths>
+        <path>
+          <groupId>stream.header.fluentbuilder</groupId>
+          <artifactId>fluent-builder-processor</artifactId>
+          <version>0.1.2</version>
+        </path>
+      </annotationProcessorPaths>
+    </configuration>
+  </plugin>
+</plugins>
 </build>
 ```
 
@@ -68,13 +69,13 @@ import stream.header.fluentbuilder.FluentBuilder.Ignore;
 
 @FluentBuilder
 public record Person(
-        @Mandatory String firstName,
-        @Mandatory String lastName,
-        @Mandatory int age,
-        String email,
-        String phoneNumber,
-        String address,
-        @Ignore String internalId  // Ignored - not part of builder, will be null
+  @Mandatory String firstName,
+  @Mandatory String lastName,
+  @Mandatory int age,
+  String email,
+  String phoneNumber,
+  String address,
+  @Ignore String internalId  // Ignored - not part of builder, will be null
 ) {
 }
 ```
@@ -84,28 +85,28 @@ public record Person(
 ```java
 // All mandatory fields must be set before build() is available
 Person person1 = PersonBuilder.builder()
-        .firstName("John")
-        .lastName("Doe")
-        .age(30)
-        .email("john.doe@example.com")
-        .phoneNumber("123-456-7890")
-        .build();
+    .firstName("John")
+    .lastName("Doe")
+    .age(30)
+    .email("john.doe@example.com")
+    .phoneNumber("123-456-7890")
+    .build();
 
 // Mandatory fields can be set in any order
 Person person2 = PersonBuilder.builder()
-        .lastName("Smith")
-        .email("jane.smith@example.com")  // Optional field can be set anytime
-        .firstName("Jane")
-        .address("123 Main St")
-        .age(25)
-        .build();
+  .lastName("Smith")
+  .email("jane.smith@example.com")  // Optional field can be set anytime
+  .firstName("Jane")
+  .address("123 Main St")
+  .age(25)
+  .build();
 
 // Only mandatory fields
 Person person3 = PersonBuilder.builder()
-        .age(40)
-        .firstName("Bob")
-        .lastName("Johnson")
-        .build();
+  .age(40)
+  .firstName("Bob")
+  .lastName("Johnson")
+  .build();
 ```
 
 ## How It Works
@@ -122,13 +123,17 @@ This ensures at compile time that you cannot call `build()` until all mandatory 
 ## Annotations
 
 ### @FluentBuilder
+
 Place on a record to generate a fluent builder for it.
 
 ### @FluentBuilder.Mandatory
+
 Mark record components that must be set before `build()` can be called. These fields enforce compile-time type safety.
 
 ### @FluentBuilder.Ignore
+
 Mark record components to exclude them from the builder entirely. Ignored fields will be set to `null` when the record is constructed. Useful for:
+
 - Internal/computed fields
 - Fields set by factory methods
 - Metadata fields not relevant during construction

@@ -40,11 +40,15 @@ jobs:
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
 
-      - name: Bump Maven Version
+      - name: Update Version Files
         run: |
           ./mvnw versions:set -DnewVersion=${{ github.event.inputs.new_version }} -DgenerateBackupPoms=false --batch-mode
           ./mvnw versions:commit --batch-mode
-          git add pom.xml */pom.xml
+
+          sed -i '/fluent-builder-annotations<\/artifactId>/,/<version>/ s/<version>[^<]*<\/version>/<version>${{ github.event.inputs.new_version }}<\/version>/' README.md
+          sed -i '/fluent-builder-processor<\/artifactId>/,/<version>/ s/<version>[^<]*<\/version>/<version>${{ github.event.inputs.new_version }}<\/version>/' README.md
+
+          git add pom.xml */pom.xml README.md
           git diff --staged --quiet || git commit -m "Bump version to ${{ github.event.inputs.new_version }}"
           git push origin main
 
