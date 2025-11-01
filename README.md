@@ -30,12 +30,12 @@ fluent-builder-parent/
   <dependency>
     <groupId>stream.header.fluentbuilder</groupId>
     <artifactId>fluent-builder-annotations</artifactId>
-    <version>0.1.2</version>
+    <version>0.1.3</version>
   </dependency>
   <dependency>
     <groupId>stream.header.fluentbuilder</groupId>
     <artifactId>fluent-builder-processor</artifactId>
-    <version>0.1.2</version>
+    <version>0.1.3</version>
     <scope>provided</scope>
   </dependency>
 </dependencies>
@@ -51,7 +51,7 @@ fluent-builder-parent/
         <path>
           <groupId>stream.header.fluentbuilder</groupId>
           <artifactId>fluent-builder-processor</artifactId>
-          <version>0.1.2</version>
+          <version>0.1.3</version>
         </path>
       </annotationProcessorPaths>
     </configuration>
