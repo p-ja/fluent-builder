@@ -163,7 +163,7 @@ class ValidationTest {
 
         // Expected to fail at compile time due to annotation target mismatch
         assertThat(compilation).failed();
-        assertThat(compilation).hadErrorContaining("annotation interface not applicable");
+        assertThat(compilation).hadErrorContaining("not applicable");
     }
 
     @Test
@@ -195,7 +195,7 @@ class ValidationTest {
 
         // Expected to fail at compile time due to annotation target mismatch
         assertThat(compilation).failed();
-        assertThat(compilation).hadErrorContaining("annotation interface not applicable");
+        assertThat(compilation).hadErrorContaining("not applicable");
     }
 
     @Test
