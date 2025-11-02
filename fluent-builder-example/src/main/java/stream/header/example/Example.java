@@ -1,6 +1,15 @@
 package stream.header.example;
 
+/**
+ * Example class demonstrating the usage of the PersonBuilder with different field configurations.
+ * Shows how mandatory and optional fields can be set in various orders.
+ */
 public class Example {
+    /**
+     * Main method demonstrating various PersonBuilder usage patterns.
+     *
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
         // Example 1: All mandatory fields set in order
         Person person1 = PersonBuilder.builder()
