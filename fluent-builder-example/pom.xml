@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>fluent-builder-example</artifactId>
+    <name>Fluent Builder - example</name>
 
     <dependencies>
         <dependency>

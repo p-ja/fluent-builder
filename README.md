@@ -144,6 +144,15 @@ For the `Person` record above, the processor generates a `PersonBuilder` class w
 
 ## Building the Project
 
+Make sure JDK is installed. Recommended version is defined in `.sdkmanrc`.
+With SDKMAN! just run
+
+```bash
+sdk env install
+```
+
+To build the the library:
+
 ```bash
 ./mvnw clean verify
 ```

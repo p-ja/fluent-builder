@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>fluent-builder-processor</artifactId>
+    <name>Fluent Builder - processor</name>
 
     <dependencies>
         <dependency>

@@ -11,4 +11,5 @@
     </parent>
 
     <artifactId>fluent-builder-annotations</artifactId>
+    <name>Fluent Builder - annotations</name>
 </project>
