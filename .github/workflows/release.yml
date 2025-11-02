@@ -34,6 +34,11 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+          server-id: central
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
       - name: Configure Git
         run: |
@@ -52,8 +57,12 @@ jobs:
           git diff --staged --quiet || git commit -m "Bump version to ${{ github.event.inputs.new_version }}"
           git push origin main
 
-      - name: Build Project
-        run: ./mvnw clean package --batch-mode
+      - name: Build and Deploy to Maven Central
+        run: ./mvnw clean deploy --batch-mode
+        env:
+          MAVEN_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
